@@ -1,5 +1,5 @@
 """
-Task routing — the "MoE / per-task head" question, in the only form that is
+Task routing - the "MoE / per-task head" question, in the only form that is
 defensible at 6,270 training samples.
 
 WHY NOT EIGHT HEADS
@@ -11,7 +11,7 @@ Per-task heads sound right and are wrong here, for three reasons:
    learn a skill. The smallest viable partition is ~1,000 rows.
 
 2. The benchmark's own numbers argue against it. MedGRPO's ablation Row A vs
-   Row C: adding the CAPTIONING rewards improved GROUNDING — STG +4.7%,
+   Row C: adding the CAPTIONING rewards improved GROUNDING - STG +4.7%,
    TAG@0.3 +6.9%, TAG@0.5 +9.9%. That is positive cross-task transfer, measured
    on this exact data. Task-separated parameters destroy precisely that. Routing
    is the cure for negative transfer, and the evidence here points the other way.
@@ -31,23 +31,13 @@ Group by what the OUTPUT DISTRIBUTION actually is, not by task name:
 
     G ~2,480 rows    C ~2,370 rows    A ~1,420 rows
 
-Each partition is large enough to train. Routing is a dict lookup on qa_type —
+Each partition is large enough to train. Routing is a dict lookup on qa_type -
 no learned router, no data cost, no inference ambiguity. Within a group the
 tasks genuinely share an output format, so the transfer that Row A/C measured is
 preserved where it is most likely to exist.
 
 Total compute is roughly unchanged: three runs over a third of the data each.
 
-MY ACTUAL RECOMMENDATION
-------------------------
-Train shared first. It is the primary model. Then, if GPU time remains, train
-the three grouped adapters and compare on val. Ship the winner.
-
-Note that a negative result is publishable and, on this data, likely: "we tested
-deterministic task routing against shared multi-task training; at 6K samples
-shared training dominates by X, contradicting the negative-transfer motivation
-for task-specialised parameters in surgical VideoLLMs." Reviewers see MoE
-proposed constantly and evaluated against a shared baseline almost never.
 """
 from __future__ import annotations
 from .sampling import normalize_task
