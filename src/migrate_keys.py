@@ -2,12 +2,6 @@
 Migrate an existing prediction store onto the (id, qa_type, qhash) key, so the
 re-run only has to generate the rows that were actually missed.
 
-Your test run produced 5,644 predictions for 6,245 rows. Every prediction is
-valid — it just needs to be attached to the right row. This script assigns each
-existing prediction to the FIRST test row matching its (id, qa_type), stamps the
-qhash, and rewrites the resume files. `src.infer` then sees ~601 rows still to
-do instead of 6,245.
-
     python -m src.migrate_keys --preds preds/test_sft \
         --test "$(python -c 'from src.paths import cfg;print(cfg("test_json"))')"
 
