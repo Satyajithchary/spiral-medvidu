@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
-# Ablation table for the workshop paper. Runs on the VAL split.
-#
-# The trick that makes this affordable: pass1.jsonl is cached and reused, so the
-# inference-time ablations (C4, C5, CTCD) cost only the refinement passes, not a
-# full re-decode. The whole table is ~1.5h instead of ~8h.
+
 set -euo pipefail
 Y() { python -c "import yaml;d=yaml.safe_load(open('configs/paths.yaml'));print(d.get('$1',''))"; }
 CACHE=$(Y ssd_cache); PREFIX=$(Y trainval_src_prefix)
