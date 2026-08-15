@@ -1,14 +1,13 @@
 """
-THE HEADLINE EXPERIMENT — output-budget sweep.
+THE HEADLINE EXPERIMENT - output-budget sweep.
 
-Your strongest finding is that a large part of reported VideoLLM failure on
-structured medical video tasks is output TRUNCATION, not perception. You have
+The strongest finding is that a large part of reported VideoLLM failure on
+structured medical video tasks is output TRUNCATION, not perception. We have
 two points (STG 0.014 at 32 tokens, 0.094 at 512). A curve is a result; two
 points are an anecdote.
 
-This sweeps max_new_tokens for one task on the val split and prints a table you
-can plot directly. Runs on the val split (GT available) so no leaderboard round
-trip is needed.
+This sweeps max_new_tokens for one task on the val split and prints a table which
+can plot directly. 
 
     python -m src.sweep_tokens --task stg  --budgets 32 64 128 256 512
     python -m src.sweep_tokens --task tal  --budgets 32 64 128 256
@@ -17,9 +16,7 @@ trip is needed.
 Cost: (#val rows for that task) x (#budgets) generations. STG is 205 val rows,
 5 budgets, ~2 s each => ~35 min. TAL 214 rows x 4 => ~25 min.
 
-Why it matters for the paper: ranks 13-16 on the public leaderboard sit at
-STG 0.003 and ranks 25-29 at TAG 0.074. Those are the same failure band. If the
-curve is steep in the region where everyone's defaults live, the claim
+If the curve is steep in the region where everyone's defaults live, the claim
 generalises beyond your own run.
 """
 from __future__ import annotations
@@ -120,14 +117,14 @@ def main():
               f"{time.time()-t0:.0f}s")
 
     print("\n" + "=" * 74)
-    print(f"OUTPUT BUDGET SWEEP — {a.task}  (n={len(rows)}, val split)")
+    print(f"OUTPUT BUDGET SWEEP - {a.task}  (n={len(rows)}, val split)")
     print("=" * 74)
     print(f"{'max_new':>8s} {'metric':>9s} {'units out':>10s} {'units gt':>9s} "
           f"{'coverage':>9s} {'fmt ok':>8s}")
     for r in results:
         print(f"{r['budget']:8d} {r['metric']:9.4f} {r['units_emitted']:10.2f} "
               f"{r['units_in_gt']:9.2f} {r['coverage']:9.3f} {r['format_ok']:8.2f}")
-    print("\nNote: 'fmt ok' stays high while the metric collapses — a truncated")
+    print("\nNote: 'fmt ok' stays high while the metric collapses - a truncated")
     print("answer parses cleanly, so format validation cannot detect this.")
 
     out = a.out or f"logs/sweep_{a.task}.json"
