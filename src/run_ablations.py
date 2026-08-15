@@ -1,5 +1,5 @@
 """
-Ablation table for the report — Python, no shell quoting.
+Ablation table for the report - Python, no shell quoting.
 
     python -m src.run_ablations                    # B, C, D, G  (~50 min)
     python -m src.run_ablations --variants all     # adds E, F    (~3 h)
@@ -15,7 +15,6 @@ only the stage that actually differs is recomputed.
   F      no refinement        -> seed pass1, rerun pass2 (~55 min)
   G      neither              -> seed pass1, rerun pass2 (~55 min)
 
-Row A is your existing preds/val_full — nothing to run.
 """
 from __future__ import annotations
 import argparse, json, os, shutil, subprocess, sys
@@ -75,7 +74,7 @@ def main():
     prefix = cfg("trainval_src_prefix", "/root/data")
     orig = cfg("trainval_frame_root")
     if not cache:
-        sys.exit("configs/paths.yaml missing ssd_cache — run src.paths --write")
+        sys.exit("configs/paths.yaml missing ssd_cache - run src.paths --write")
 
     if a.variants == "cheap":
         names = CHEAP
@@ -85,7 +84,7 @@ def main():
         names = [v.strip() for v in a.variants.split(",")]
 
     if not os.path.exists(os.path.join(a.src, "pass1.jsonl")):
-        sys.exit(f"{a.src}/pass1.jsonl not found — run the full val inference first")
+        sys.exit(f"{a.src}/pass1.jsonl not found - run the full val inference first")
 
     # ---- GUARD 1: the seed source must carry question hashes ---------------
     # Records written before the (id, qa_type, qhash) fix have no qhash field.
