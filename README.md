@@ -8,8 +8,9 @@
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Benchmark](https://img.shields.io/badge/benchmark-MedVidBench-informational)](https://huggingface.co/datasets/UII-AI/MedVidBench)
 
-Official implementation of **Team MINDH Lab** for the MedVidU Challenge at the ECCV 2026 Workshop on
-Medical Video Understanding. Accepted as an **Oral**.
+Official implementation of **Team MINDH Lab** for the MedVidU Challenge at the ECCV 2026 Workshop on Medical Video Understanding. 
+
+Accepted as an **Oral**.
 
 ---
 
