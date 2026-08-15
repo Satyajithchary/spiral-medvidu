@@ -2,8 +2,8 @@
 Parsers, metrics, and verifiable rewards.
 
 Doubles as the local evaluation backend (evaluate.py) and the GRPO reward
-function (train_grpo.py). One implementation, so what you optimise is exactly
-what you measure.
+function (train_grpo.py). One implementation, so what we optimise is exactly
+what we measure.
 
 Reward design differences vs MedGRPO:
 
@@ -32,7 +32,7 @@ from .formats import (parse_spans, merge_spans, parse_tboxes, stg_miou,
 
 # ------------------------------------------------------------------- parsers
 
-# Parsers live in src/formats.py — they were rewritten against the real
+# Parsers live in src/formats.py - they were rewritten against the real
 # ground-truth dump. Do not reintroduce local copies here.
 
 
@@ -67,7 +67,7 @@ def tiou(a, b) -> float:
 
 
 def best_tiou(pred, gt) -> float:
-    """Max pairwise IoU — matches 'mIoU@thr' style single-segment scoring."""
+    """Max pairwise IoU - matches 'mIoU@thr' style single-segment scoring."""
     if not pred or not gt:
         return 0.0
     best = 0.0
@@ -179,7 +179,7 @@ def format_ok(pred: str, qa_type: str) -> bool:
 # --------------------------------------------- cross-dataset normalisation
 
 class RewardNormalizer:
-    """Logistic, median-centred, IQR-scaled — MedGRPO eq.(3), but the
+    """Logistic, median-centred, IQR-scaled - MedGRPO eq.(3), but the
     percentiles are refreshable from the live policy instead of frozen at SFT.
 
         r = sigmoid( k * (x - p50) / IQR )
