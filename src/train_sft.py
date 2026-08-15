@@ -1,16 +1,11 @@
 """
-STEP 3 — Stage-1 LoRA SFT.
+STEP 3 - Stage-1 LoRA SFT.
 
 6,270 real rows (+ ~2,200 harvested aux rows). At that scale full fine-tuning a
-4B on 3 epochs will memorise and generalise worse than LoRA; the published
-7B-SFT numbers (TAG 0.142) are consistent with an overfit/format-collapsed
-model. We use rank-64 LoRA on the LLM + projector, ViT frozen.
+4B on 3 epochs will memorise and generalise worse than LoRA. 
+Rank-64 is used for LoRA on the LLM + projector, ViT frozen.
 
     accelerate launch -m src.train_sft --config configs/sft.yaml
-
-Blackwell note (RTX PRO 6000 / sm_120): flash-attn2 wheels often don't cover
-sm_120. attn_implementation defaults to "sdpa" here, which is correct and only
-modestly slower. Do not waste 3 hours compiling flash-attn.
 """
 from __future__ import annotations
 import argparse, os, json, math, yaml, torch
@@ -100,7 +95,7 @@ def main():
         min_pixels=cfg.get("min_pixels", 64 * 28 * 28),
         max_pixels=cfg.get("max_pixels", 200 * 28 * 28),
     )
-    # cap video token budget explicitly — this is the main VRAM knob
+    # cap video token budget explicitly - this is the main VRAM knob
     if hasattr(processor, "image_processor"):
         ip = processor.image_processor
         for k, v in [("min_pixels", cfg.get("min_pixels")),
@@ -140,7 +135,7 @@ def main():
               f"({GROUP_NAMES.get(grp, grp)}): {len(train_ds.rows)}/{n0} rows")
         summarise(train_ds.rows)
         if len(train_ds.rows) < 800:
-            print("[sft] !! under 800 rows for this group — expect memorisation.")
+            print("[sft] !! under 800 rows for this group - expect memorisation.")
     eval_ds = (MedVidDataset(cfg["val_json"], train=True, **common)
                if cfg.get("val_json") and cfg.get("do_eval", True) else None)
     if eval_ds is not None and grp and grp != "all":
