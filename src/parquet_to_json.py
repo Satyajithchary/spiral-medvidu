@@ -4,7 +4,7 @@ Fallback: rebuild the split json from HuggingFace parquet.
 This reconstructs the json the rest of the pipeline expects.
 
     python -m src.parquet_to_json --parquet '/path/to/*.parquet' \
-        --out /media/data2/MedVIU_valdata/testdata/cleaned_test_data_11_04.json
+        --out /path/to/MedVIU_valdata/testdata/cleaned_test_data_11_04.json
 """
 import argparse, glob, json
 
