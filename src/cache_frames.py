@@ -1,9 +1,8 @@
 """
-STEP 1 — HDD -> SSD frame cache + motion-score precompute.
+STEP 1 - HDD -> SSD frame cache + motion-score precompute.
 
-Why this matters more than it looks: you have ~200k small JPEGs on a spinning
-disk. A 7200rpm HDD does ~150 random IOPS. At 64 frames/sample that is ~0.4 s of
-pure seek time per sample, per epoch — the GPU will sit idle ~70% of the time.
+~200k small JPEGs on a spinning disk. A 7200rpm HDD does ~150 random IOPS. 
+At 64 frames/sample that is ~0.4 s of pure seek time per sample, per epoch - the GPU will sit idle ~70% of the time.
 Copying to SSD and downscaling turns this into a non-issue and shrinks ~18 GB to
 ~3 GB.
 
@@ -108,7 +107,7 @@ def main():
             jobs_cfg.append((jp, _cfg(f"{sp}_frame_root"),
                              _cfg(f"{sp}_src_prefix", "") or ""))
         if not jobs_cfg:
-            raise SystemExit("[cache] nothing to do — run src.paths --write first")
+            raise SystemExit("[cache] nothing to do - run src.paths --write first")
         for jp, root, pref in jobs_cfg:
             print(f"\n[cache] === split json={jp}\n"
                   f"[cache]     root={root} prefix='{pref}'")
