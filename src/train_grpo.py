@@ -1,12 +1,9 @@
 """
-STEP 5 (optional but high-value) — Stage-2 GRPO on verifiable tasks.
+STEP 5 (optional but high-value) - Stage-2 GRPO on verifiable tasks.
 
-Self-contained: no verl, no EasyR1, no TRL. Those are all better engineered than
-this, and all of them will cost you 4+ hours of dependency hell on a Blackwell
-card two days before a deadline. This is ~200 lines of HF `generate` + a policy
-gradient, and it runs.
+Self-contained: no verl, no EasyR1, no TRL.
 
-Scope (deliberately narrow — this is where the headroom is and where rewards are
+Scope (deliberately narrow - this is where the headroom is and where rewards are
 cheap and exact):
     tal, stg, next_action, cvs_assessment, skill_assessment
 Captioning is NOT in the RL loop. Its reward needs a judge, and Stage-1 SFT plus
@@ -14,7 +11,7 @@ CTCD at inference gets most of that value for none of the cost.
 
 Key details:
   - LoRA-only updates, ViT frozen, no reference model, no KL term (DAPO-style).
-  - Asymmetric clipping eps_low=0.2, eps_high=0.28 (as in the paper).
+  - Asymmetric clipping eps_low=0.2, eps_high=0.28.
   - Group G=8, one prompt per step, grad accumulation over prompts.
   - Groups with zero reward variance are skipped (no gradient signal, wasted compute).
   - Frame budget halved vs SFT to fit 8 rollouts of KV cache.
