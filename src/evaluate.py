@@ -1,14 +1,13 @@
 """
-STEP 4b — Local evaluation on the video-disjoint val split.
+STEP 4b - Local evaluation on the video-disjoint val split.
 
-Reproduces the leaderboard's metric names so your local number means something:
+Reproduces the leaderboard's metric names:
     CVS_acc  NAP_acc  SA_acc  STG_mIoU  TAG_mIoU@0.3  TAG_mIoU@0.5  DVC_F1
-plus proxy scores for the three LLM-judge columns (DVC_llm/VS_llm/RC_llm) —
-and, optionally, the REAL GPT judge on a subsample if you have an API key.
+plus proxy scores for the three LLM-judge columns (DVC_llm/VS_llm/RC_llm) -
+and, optionally, the REAL GPT judge on a subsample if an API key is available.
 
 Also prints PER-DATASET breakdowns. This is the diagnostic MedGRPO's own paper
 shows matters most: their failure mode was easy datasets swamping hard ones.
-If your CoPESD STG is 0.5 and EgoSurgery STG is 0.05, you have the same disease.
 
     python -m src.evaluate --preds preds/val/raw_predictions.json --gt data/val.json
     python -m src.evaluate ... --judge --judge_n 150   # needs OPENAI_API_KEY
@@ -74,7 +73,7 @@ def main():
     P = json.load(open(a.preds))
     if isinstance(P, dict):
         P = list(P.values())
-    # (id, qa_type) — id alone collides across tasks on the same clip
+    # (id, qa_type) - id alone collides across tasks on the same clip
     from .formats import qhash as _qh
     pred = {(p["id"], p["qa_type"], p.get("qhash") or ""): p["prediction"]
             for p in P}
@@ -124,7 +123,7 @@ def main():
               f"(id, qa_type) cannot be told apart. Regenerate before reporting.")
     if len({p["id"] for p in P}) < len(P):
         print(f"[eval] note: {len(P)} predictions span only "
-              f"{len({p['id'] for p in P})} unique ids — keying by (id, qa_type)")
+              f"{len({p['id'] for p in P})} unique ids - keying by (id, qa_type)")
     gt_rows = json.load(open(a.gt))
     if len(P) > len(gt_rows) * 1.05:
         print(f"[eval] !! {len(P)} predictions for {len(gt_rows)} ground-truth "
@@ -203,7 +202,7 @@ def main():
     print(f"\n=== LOCAL VAL  ({n_eval} scored / {len(gt_rows)} gt rows"
           + (f", {n_missing} MISSING PREDICTIONS" if n_missing else "") + ") ===")
     if n_missing:
-        print("  !! incomplete inference — re-run src.infer (it resumes) before "
+        print("  !! incomplete inference - re-run src.infer (it resumes) before "
               "trusting any number below")
     order = ["CVS_acc", "CVS_exact", "NAP_acc", "SA_acc", "SA_MAE", "STG_mIoU",
              "TAG_mIoU@0.3", "TAG_mIoU@0.5", "TAG_R@0.3", "TAG_R@0.5",
