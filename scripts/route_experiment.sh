@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
-# OPTIONAL: the task-routing experiment (3 grouped adapters vs 1 shared).
-#
-# Run this ONLY after the shared model is trained, validated, and a submission
-# is banked. Total compute is roughly one extra shared run, because each group
-# trains on ~1/3 of the data.
-#
+# The task-routing experiment (3 grouped adapters vs 1 shared).
 #   bash scripts/route_experiment.sh
 set -euo pipefail
 Y() { python -c "import yaml;d=yaml.safe_load(open('configs/paths.yaml'));print(d.get('$1',''))"; }
