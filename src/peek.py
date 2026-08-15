@@ -1,9 +1,7 @@
 """
 Look at what the model ACTUALLY wrote, per task, next to the ground truth.
 
-Aggregate metrics tell you a number is bad. This tells you why. Run it whenever
-a task scores far below expectation — a format mismatch and a genuine capability
-gap look identical in the metric and completely different here.
+Aggregate metrics tells whether a number is bad or not. This tells why. 
 
     python -m src.peek --preds preds/val_full/raw_predictions.json --gt data/val.json
     python -m src.peek --preds ... --gt ... --task stg --n 8
