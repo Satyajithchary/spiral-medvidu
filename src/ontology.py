@@ -2,7 +2,7 @@
 Canonical Surgical Ontology (CSO)
 =================================
 Contribution #3. Eight datasets, eight dialects. CholecT50 says "grasper",
-CoPESD says "forceps", EgoSurgery says "Maryland dissector" — same referent.
+CoPESD says "forceps", EgoSurgery says "Maryland dissector" - same referent.
 
 Used in three places:
   1. prompts.py     -> dataset-conditioned vocabulary hints (say it the way the
@@ -11,9 +11,8 @@ Used in three places:
   2. postprocess.py -> terminology repair (map generic -> specific for the dataset)
   3. rewards.py     -> terminology-F1 shaping term for GRPO
 
-Extend the tables. They are deliberately plain dicts so you can grep and edit.
 Run `python -m src.ontology --audit <train.json>` to find frequent surface forms
-in the GT that are NOT yet covered — that tells you exactly what to add.
+in the GT that are NOT yet covered - that tells exactly what to add.
 """
 from __future__ import annotations
 import re, json, argparse, collections
@@ -162,7 +161,7 @@ _PATTERN = re.compile(
     r"\b(" + "|".join(re.escape(a) for a in _ALIASES_SORTED) + r")\b", re.I
 )
 
-# generic terms we want to *avoid* producing — the judge penalises vagueness (R3)
+# generic terms we want to *avoid* producing - the judge penalises vagueness (R3)
 VAGUE_TERMS = {
     "tool", "instrument", "device", "object", "tissue", "structure", "area",
     "region", "thing", "surface", "something", "part", "material",
@@ -236,7 +235,7 @@ def audit(train_json: str, topk: int = 60):
         for w in re.findall(r"[a-zA-Z][a-zA-Z\-]{3,}", gt.lower()):
             if w not in stop and w not in covered_words:
                 cnt[w] += 1
-    print(f"Top {topk} uncovered terms in ground truth — consider adding:")
+    print(f"Top {topk} uncovered terms in ground truth - consider adding:")
     for w, c in cnt.most_common(topk):
         print(f"  {c:6d}  {w}")
 
