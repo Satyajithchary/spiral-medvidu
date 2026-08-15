@@ -1,34 +1,33 @@
 """
-STEP 2 — Information Harvesting (IH) + dataset construction.
+STEP 2 - Information Harvesting (IH) + dataset construction.
 
 This is contribution #1 and the reason this pipeline should beat a plain SFT on
 the same 6,270 samples.
 
-The insight: the released split gives you one (question, answer) pair per row.
+The insight: the released split gives one (question, answer) pair per row.
 But each *answer* is dense with structured facts, and multiple rows share a
 video. So:
 
-  (a) HARVEST — parse every GT answer into typed facts:
+  (a) HARVEST - parse every GT answer into typed facts:
         time spans, instruments, verbs, anatomy, bboxes, action names, scores.
       One caption -> up to seven supervision streams.
 
-  (b) INDEX — build a per-video fact table by fusing facts across ALL tasks that
+  (b) INDEX - build a per-video fact table by fusing facts across ALL tasks that
       touch that video. A TAL row tells you when 'cutting' happens; a DVC row
-      tells you what it looked like; an RC row tells you which tool was where.
+      tells what it looked like; an RC row tells you which tool was where.
 
-  (c) SYNTHESISE — emit auxiliary QA pairs from the fused index that no row in
+  (c) SYNTHESISE - emit auxiliary QA pairs from the fused index that no row in
       the original data contains ("which instruments are visible between 20 and
       35 seconds?", "list the actions in temporal order", "which quadrant is the
       grasper in at 12s?"). These are free labels, exactly the "use information
       other teams leave on the floor" idea.
 
-  (d) SPLIT — by VIDEO ID, never by row. Same video in train and val = a
-      meaningless val score and a bad decision at 3am. This is the single most
-      common way sprint teams fool themselves.
+  (d) SPLIT - by VIDEO ID, never by row. Same video in train and val = a
+      meaningless val score and a bad decision.
 
 Usage:
     python -m src.prep_data --trainval medvidu_eccv2026_trainval.json \
-        --out data/ --cache /mnt/ssd/medvidu_frames --val_frac 0.12 --aux_ratio 0.35
+        --out data/ --cache /path/to/medvidu_frames --val_frac 0.12 --aux_ratio 0.35
 """
 from __future__ import annotations
 import argparse, json, os, re, random, collections
@@ -64,7 +63,7 @@ def harvest(sample) -> dict:
          "instruments": [], "verbs": [], "anatomy": [],
          "quadrants": [], "raw": gt}
 
-    # (0) struc_info — the pre-parsed structured ground truth. This release
+    # (0) struc_info - the pre-parsed structured ground truth. This release
     #     ships it and it is strictly better than regexing the answer string:
     #     exact spans, the action label, AND the closed action vocabulary for
     #     the procedure. Regex parsing is now only the fallback.
@@ -80,7 +79,7 @@ def harvest(sample) -> dict:
         f["events"].append(e)
         f["spans"].append((e["start"], e["end"]))
 
-    # (2) bare time spans (TAL) — zero-duration spans are real, keep them
+    # (2) bare time spans (TAL) - zero-duration spans are real, keep them
     if not f["spans"]:
         f["spans"].extend(parse_spans(gt))
 
@@ -241,8 +240,8 @@ def synth_aux(sample, index, rng) -> list[dict]:
 # So during training we inject a NOISED ground-truth timeline that simulates
 # what an imperfect pass-1 actually produces: jittered boundaries, dropped
 # segments, spurious segments, and sometimes nothing at all. The model learns
-# the right behaviour — use the prior as a hint, override it when the frames
-# disagree — instead of learning to trust or ignore it unconditionally.
+# the right behaviour - use the prior as a hint, override it when the frames
+# disagree - instead of learning to trust or ignore it unconditionally.
 #
 # The noise parameters below are deliberately pessimistic relative to a trained
 # model's real pass-1 error. Over-noising is safe (the model learns scepticism);
@@ -395,7 +394,7 @@ def main():
         if ex:
             print(f"[prep]    example prior: {ex['_ctcd_prior'][:180]}")
     else:
-        print("[prep] C3 DISABLED — CTCD at inference will be a train/test "
+        print("[prep] C3 DISABLED - CTCD at inference will be a train/test "
               "mismatch. Only do this for the ablation row.")
 
     for name, rows in [("train", train_final), ("val", val)]:
