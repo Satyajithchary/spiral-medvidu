@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+title: >-
+  SPIRAL: Structured Supervision Harvesting and Self-Refining Inference for
+  Heterogeneous Medical Video Understanding
+message: If you use this software, please cite the accompanying paper.
+type: software
+authors:
+  - family-names: Chary
+    given-names: Podakanti Satyajith
+    affiliation: Indian Institute of Technology Hyderabad
+    email: es25resch11002@iith.ac.in
+  - family-names: Ganapathy
+    given-names: Nagarajan
+    affiliation: Indian Institute of Technology Hyderabad
+repository-code: https://github.com/CHANGE-ME/spiral-medvidu
+license: MIT
+keywords:
+  - medical video understanding
+  - vision language models
+  - surgical video analysis
+  - test time refinement
+  - surgical skill assessment
+  - benchmark evaluation
+preferred-citation:
+  type: conference-paper
+  title: >-
+    SPIRAL: Structured Supervision Harvesting and Self-Refining Inference for
+    Heterogeneous Medical Video Understanding
+  authors:
+    - family-names: Chary
+      given-names: Podakanti Satyajith
+    - family-names: Ganapathy
+      given-names: Nagarajan
+  collection-title: >-
+    Proceedings of the European Conference on Computer Vision (ECCV) Workshops
+  year: 2026

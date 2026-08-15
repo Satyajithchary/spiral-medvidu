@@ -1,0 +1,13 @@
+# --- install torch FIRST, matching your Blackwell card (sm_120) ---
+# pip install --index-url https://download.pytorch.org/whl/cu128 torch torchvision
+transformers>=4.57.0
+accelerate>=1.0.0
+peft>=0.14.0
+qwen-vl-utils[decord]>=0.0.11
+sentencepiece
+pillow>=10.0.0
+numpy
+pyyaml
+tqdm
+sentence-transformers      # optional: better caption proxy + local eval
+openai                     # optional: real LLM judge for local validation only

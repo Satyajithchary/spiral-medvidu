@@ -1,0 +1,62 @@
+{
+  "split": "video-disjoint validation, 897 rows",
+  "metrics": {
+    "CVS_criterion_acc": 0.955,
+    "CVS_exact_triple": 0.9189,
+    "NAP_acc": 0.5,
+    "SA_OSATS_exact": 0.3542,
+    "SA_MAE": 0.8264,
+    "STG_mIoU": 0.1007,
+    "TAG_mIoU@0.3": 0.2305,
+    "TAG_mIoU@0.5": 0.1745,
+    "TAG_R@0.3": 0.3925,
+    "TAG_R@0.5": 0.2523,
+    "TAG_rawIoU": 0.2636,
+    "DVC_F1": 0.1964,
+    "DVC_judge_proxy": 0.3317,
+    "VS_judge_proxy": 0.4664,
+    "RC_judge_proxy": 0.2343
+  },
+  "per_source": {
+    "AVOS": {
+      "TAG_rawIoU": 0.316,
+      "DVC_F1": 0.215,
+      "NAP": 0.533
+    },
+    "CholecT50": {
+      "TAG_rawIoU": 0.345,
+      "DVC_F1": 0.7,
+      "NAP": 0.5,
+      "VS_proxy": 0.365
+    },
+    "CholecTrack20": {
+      "STG": 0.057,
+      "RC_proxy": 0.343
+    },
+    "CoPESD": {
+      "TAG_rawIoU": 0.169,
+      "STG": 0.287,
+      "DVC_F1": 0.019,
+      "NAP": 0.525,
+      "VS_proxy": 0.539
+    },
+    "EgoSurgery": {
+      "TAG_rawIoU": 0.168,
+      "STG": 0.124,
+      "DVC_F1": 0.156,
+      "NAP": 0.417,
+      "RC_proxy": 0.117
+    },
+    "NurViD": {
+      "TAG_rawIoU": 0.247,
+      "DVC_F1": 0.19
+    },
+    "Cholec80_CVS": {
+      "CVS_acc": 0.955
+    },
+    "JIGSAWS": {
+      "SA_acc": 0.354
+    }
+  },
+  "note": "judge proxy columns are a deterministic stand-in and are not comparable with the leaderboard llm columns"
+}

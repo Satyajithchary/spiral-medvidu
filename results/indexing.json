@@ -1,0 +1,24 @@
+{
+  "split": "MedVidBench hidden test, 6245 rows",
+  "keys": {
+    "identifier": {
+      "distinct": 3975,
+      "merged": 2270
+    },
+    "identifier_task": {
+      "distinct": 5644,
+      "merged": 601,
+      "STG": 0.071,
+      "TAG@0.3": 0.199,
+      "RC_llm": 3.374
+    },
+    "identifier_task_questionhash": {
+      "distinct": 6216,
+      "merged": 29,
+      "STG": 0.083,
+      "TAG@0.3": 0.2,
+      "RC_llm": 3.38
+    }
+  },
+  "note": "only the 572 recoverable rows were regenerated; every other prediction held fixed"
+}

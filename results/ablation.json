@@ -1,0 +1,80 @@
+{
+  "split": "video-disjoint validation",
+  "leave_one_out": {
+    "complete": {
+      "TAG@0.3": 0.2305,
+      "TAG@0.5": 0.1745,
+      "STG": 0.1007
+    },
+    "no_temporal_resampling": {
+      "TAG@0.3": 0.2538,
+      "TAG@0.5": 0.2069,
+      "STG": 0.1007,
+      "paired_diff": -0.028,
+      "ci95": [
+        -0.06,
+        0.003
+      ],
+      "p": 0.23,
+      "rows_revised": 178,
+      "rows_total": 214,
+      "improved": 59,
+      "worsened": 61,
+      "unchanged": 94
+    },
+    "no_spatial_reprediction": {
+      "TAG@0.3": 0.2305,
+      "TAG@0.5": 0.1745,
+      "STG": 0.108,
+      "paired_diff": -0.007,
+      "ci95": [
+        -0.017,
+        0.002
+      ],
+      "p": 0.3,
+      "rows_revised": 120,
+      "rows_total": 205,
+      "improved": 41,
+      "worsened": 59,
+      "unchanged": 105
+    }
+  },
+  "decoding_rule": {
+    "greedy": {
+      "SA_exact": 0.3542,
+      "SA_MAE": 0.8611,
+      "CVS": 0.955,
+      "NAP": 0.5638
+    },
+    "expectation_K5": {
+      "SA_exact": 0.3542,
+      "SA_MAE": 0.8264,
+      "CVS": 0.9532,
+      "NAP": 0.5
+    }
+  },
+  "multirun_5_seeds": {
+    "skill_assessment": {
+      "n": 24,
+      "mean": 0.3347,
+      "std": 0.0151,
+      "min": 0.3125,
+      "max": 0.3542
+    },
+    "cvs_assessment": {
+      "n": 37,
+      "mean": 0.9532,
+      "std": 0.004,
+      "min": 0.9459,
+      "max": 0.955
+    },
+    "next_action": {
+      "n": 94,
+      "mean": 0.5,
+      "std": 0.0336,
+      "min": 0.4468,
+      "max": 0.5319
+    }
+  },
+  "interpretation": "both grounding operators influence predictions substantially while the aggregate effect is direction free, attributed to the absence of a candidate selection criterion in the refinement loop"
+}

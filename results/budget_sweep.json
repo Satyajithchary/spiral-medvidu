@@ -1,0 +1,113 @@
+{
+  "split": "video-disjoint validation, 897 rows",
+  "description": "output token budget sweep. coverage is the fraction of required output units emitted, validity the fraction accepted by format checking",
+  "stg": {
+    "n": 205,
+    "units_required": 5.31,
+    "runs": [
+      {
+        "budget": 32,
+        "metric": 0.0147,
+        "units_out": 0.92,
+        "coverage": 0.186,
+        "validity": 0.92
+      },
+      {
+        "budget": 64,
+        "metric": 0.0486,
+        "units_out": 1.92,
+        "coverage": 0.413,
+        "validity": 1.0
+      },
+      {
+        "budget": 128,
+        "metric": 0.0931,
+        "units_out": 3.77,
+        "coverage": 0.778,
+        "validity": 1.0
+      },
+      {
+        "budget": 256,
+        "metric": 0.108,
+        "units_out": 5.42,
+        "coverage": 0.994,
+        "validity": 1.0
+      },
+      {
+        "budget": 512,
+        "metric": 0.108,
+        "units_out": 5.44,
+        "coverage": 0.994,
+        "validity": 1.0
+      }
+    ]
+  },
+  "tal": {
+    "n": 214,
+    "units_required": 1.76,
+    "runs": [
+      {
+        "budget": 32,
+        "metric": 0.2603,
+        "units_out": 1.7,
+        "coverage": 0.899,
+        "validity": 1.0
+      },
+      {
+        "budget": 64,
+        "metric": 0.2861,
+        "units_out": 2.25,
+        "coverage": 0.922,
+        "validity": 1.0
+      },
+      {
+        "budget": 128,
+        "metric": 0.291,
+        "units_out": 2.86,
+        "coverage": 0.922,
+        "validity": 1.0
+      },
+      {
+        "budget": 256,
+        "metric": 0.291,
+        "units_out": 3.48,
+        "coverage": 0.922,
+        "validity": 1.0
+      }
+    ]
+  },
+  "skill_assessment": {
+    "n": 24,
+    "units_required": 6.0,
+    "runs": [
+      {
+        "budget": 16,
+        "metric": 0.0625,
+        "units_out": 1.0,
+        "coverage": 0.167,
+        "validity": 0.0
+      },
+      {
+        "budget": 32,
+        "metric": 0.1944,
+        "units_out": 3.0,
+        "coverage": 0.5,
+        "validity": 1.0
+      },
+      {
+        "budget": 64,
+        "metric": 0.3542,
+        "units_out": 6.0,
+        "coverage": 1.0,
+        "validity": 1.0
+      },
+      {
+        "budget": 128,
+        "metric": 0.3542,
+        "units_out": 6.0,
+        "coverage": 1.0,
+        "validity": 1.0
+      }
+    ]
+  }
+}

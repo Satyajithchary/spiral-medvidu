@@ -1,0 +1,48 @@
+# Stage-1 LoRA SFT.  ~10-13h for 3 epochs on ~8.5k rows @ 96GB.
+# Short on time: epochs: 2 and budget_scale: 0.85  ->  ~7h.
+
+model: Qwen/Qwen3-VL-8B-Instruct     # see README for the 4B vs 8B decision
+attn: sdpa                            # Blackwell: do NOT fight flash-attn2
+
+train_json: data/train.json
+val_json:   data/val.json
+do_eval:    true
+
+# these three are filled in by:  python -m src.paths --root /media/data2 --write
+cache_root: /media/data2/medvidu_cache
+src_prefix: /root/data
+
+output_dir: runs/sft
+
+# --- capacity -------------------------------------------------------------
+lora_r: 64
+lora_alpha: 128
+lora_dropout: 0.05
+lora_targets: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+modules_to_save: null
+
+# --- optimisation ---------------------------------------------------------
+epochs: 3
+bs: 1
+grad_accum: 8            # effective batch 8
+lr: 1.0e-4               # LoRA lr. Do NOT copy the paper's 5e-7, that is full-FT.
+warmup: 0.05
+grad_ckpt: true
+seed: 0
+
+# --- visual budget (the main VRAM knob) ----------------------------------
+max_frames: 64
+budget_scale: 1.0
+min_pixels: 50176        #  64 * 28 * 28
+max_pixels: 156800       # 200 * 28 * 28  -> ~50 visual tokens/frame after merge
+max_len: 8192
+
+# --- C2 difficulty-balanced multi-source sampling -------------------------
+balance_tau: 0.5         # 0 = off (uniform, the ablation baseline), 0.5 = sqrt
+balance_gamma: 1.0       # exponent on (1-accuracy) when difficulty_json is set
+aux_weight: 0.7          # damp harvested auxiliary rows vs real supervision
+difficulty_json: null    # e.g. logs/04_val_sft.json for a difficulty-aware round 2
+
+workers: 8
+log_steps: 10
+report_to: none
