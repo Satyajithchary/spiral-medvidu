@@ -1,21 +1,21 @@
 """
-STEP 7 — Repair + submission builder.
+STEP 7 - Repair + submission builder.
 
-Free points live here. A prediction that is semantically right but syntactically
+A prediction that is semantically right but syntactically
 unparseable scores zero. On the published table, several off-the-shelf models
-score 0.000 on STG/CVS — that is a parsing failure, not a vision failure.
+score 0.000 on STG/CVS - that is a parsing failure, not a vision failure.
 
 What this does:
-  1. FORMAT REPAIR   — coerce every output into the exact expected shape.
-  2. CLAMPING        — time spans clipped to the clip duration; boxes clipped to
+  1. FORMAT REPAIR   - coerce every output into the exact expected shape.
+  2. CLAMPING        - time spans clipped to the clip duration; boxes clipped to
                        frame bounds. A span of 0-999s on a 60s clip is an
                        automatic IoU near zero and is trivially fixable.
-  3. TERMINOLOGY UPGRADE — replace vague nouns with the dataset's preferred
+  3. TERMINOLOGY UPGRADE - replace vague nouns with the dataset's preferred
                        specific term when the ontology can disambiguate.
                        Targets judge dimensions R1/R2/R3.
-  4. EMPTY BACKFILL  — never submit an empty string. A dataset-conditioned prior
+  4. EMPTY BACKFILL  - never submit an empty string. A dataset-conditioned prior
                        beats "" on every metric.
-  5. SCHEMA CHECK    — ids match the test file exactly, qa_type preserved
+  5. SCHEMA CHECK    - ids match the test file exactly, qa_type preserved
                        verbatim, count == expected.
 
     python -m src.postprocess --preds preds/test/raw_predictions.json \
@@ -113,7 +113,7 @@ def fix_tal(pred, dur):
 
 
 def wanted_timestamps(row):
-    """Which timestamps the question asks about — recovered from the prompt."""
+    """Which timestamps the question asks about - recovered from the prompt."""
     q = next((m["value"] for m in row["conversations"] if m["from"] == "human"), "")
     ts = [float(x) for x in re.findall(r"(\d+(?:\.\d+)?)\s*seconds?", q)]
     return sorted(set(ts))[:12]
@@ -121,7 +121,7 @@ def wanted_timestamps(row):
 
 def fix_stg(pred, row, dur=0.0):
     """Real format: one box PER TIMESTAMP. A lone box scores near zero, so if the
-    model emitted fewer boxes than timestamps we replicate the last one — a
+    model emitted fewer boxes than timestamps we replicate the last one - a
     stale box beats a missing one on every timestamp it is scored against."""
     tb = parse_tboxes(pred)
     want = wanted_timestamps(row)
@@ -258,12 +258,12 @@ def main():
         print(f"    {k:28s} {v}")
 
     # ---- hard schema check -------------------------------------------------
-    assert len(out) == len(test), "ROW COUNT MISMATCH — leaderboard will reject"
+    assert len(out) == len(test), "ROW COUNT MISMATCH - leaderboard will reject"
     assert {o["id"] for o in out} == {r["id"] for r in test}, "ID MISMATCH"
     assert all(o["prediction"].strip() for o in out), "EMPTY PREDICTION PRESENT"
     qt = collections.Counter(o["qa_type"] for o in out)
     print("[post] qa_type distribution (must match test file):", dict(qt))
-    print("[post] SCHEMA OK — safe to upload")
+    print("[post] SCHEMA OK - safe to upload")
 
 
 if __name__ == "__main__":
