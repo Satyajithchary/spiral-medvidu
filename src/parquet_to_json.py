@@ -1,9 +1,7 @@
 """
 Fallback: rebuild the split json from HuggingFace parquet.
 
-If you obtained MedVidBench via `load_dataset(...)` or `git clone` of the
-auto-converted branch, you have parquet shards and no json. This reconstructs
-the json the rest of the pipeline expects.
+This reconstructs the json the rest of the pipeline expects.
 
     python -m src.parquet_to_json --parquet '/path/to/*.parquet' \
         --out /media/data2/MedVIU_valdata/testdata/cleaned_test_data_11_04.json
