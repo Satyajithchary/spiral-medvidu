@@ -1,15 +1,13 @@
 # Stage-1 LoRA SFT.  ~10-13h for 3 epochs on ~8.5k rows @ 96GB.
-# Short on time: epochs: 2 and budget_scale: 0.85  ->  ~7h.
 
 model: Qwen/Qwen3-VL-8B-Instruct     # see README for the 4B vs 8B decision
-attn: sdpa                            # Blackwell: do NOT fight flash-attn2
+attn: sdpa                          
 
 train_json: data/train.json
 val_json:   data/val.json
 do_eval:    true
 
-# these three are filled in by:  python -m src.paths --root /media/data2 --write
-cache_root: /media/data2/medvidu_cache
+cache_root: /path/to/medvidu_cache
 src_prefix: /root/data
 
 output_dir: runs/sft
@@ -25,7 +23,7 @@ modules_to_save: null
 epochs: 3
 bs: 1
 grad_accum: 8            # effective batch 8
-lr: 1.0e-4               # LoRA lr. Do NOT copy the paper's 5e-7, that is full-FT.
+lr: 1.0e-4               # LoRA lr. 
 warmup: 0.05
 grad_ckpt: true
 seed: 0
