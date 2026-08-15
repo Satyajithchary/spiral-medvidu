@@ -22,8 +22,8 @@ Algorithm, per split:
 That recovers prefix="/root/data" + root=<...>/MedVIU_valdata for train, and
 prefix="" + root=<...>/MedVIU_valdata for test, with no special-casing.
 
-    python -m src.paths --root /media/data2/MedVIU_valdata --write
-    python -m src.paths --root /media/data2/MedVIU_valdata \
+    python -m src.paths --root /path/to/MedVIU_valdata --write
+    python -m src.paths --root /path/to/MedVIU_valdata \
         --test_json /explicit/path.json --write
 """
 from __future__ import annotations
@@ -211,7 +211,7 @@ def resolve_split(root, json_path, n_probe=40, verbose=True):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--root", default="/media/data2/MedVIU_valdata")
+    ap.add_argument("--root", default="/path/to/MedVIU_valdata")
     ap.add_argument("--trainval_json", default=None, help="skip auto-detection")
     ap.add_argument("--test_json", default=None, help="skip auto-detection")
     ap.add_argument("--ssd_cache", default=None)
@@ -270,7 +270,7 @@ def main():
             print("You have the testdata FRAMES but not the metadata json.")
             print("Get it (frames already present, so grab the json only):")
             print()
-            print("  cd /media/data2/MedVIU_valdata/testdata")
+            print("  cd /path/to/MedVIU_valdata/testdata")
             print("  huggingface-cli download UII-AI/MedVidBench \\")
             print("      cleaned_test_data_11_04.json \\")
             print("      --repo-type dataset --local-dir .")
@@ -313,7 +313,7 @@ def main():
         cfg[f"{key}_src_prefix"] = prefix
 
     # keep the cache on the same volume as the data. Using dirname(root) put it
-    # on /media when --root was /media/data2, which is the wrong filesystem.
+    # on /media when --root was /path/to, which is the wrong filesystem.
     cfg["ssd_cache"] = a.ssd_cache or os.path.join(root, "medvidu_cache")
     cfg["work_dir"] = os.path.join(os.getcwd(), "data")
 
@@ -357,7 +357,7 @@ def need(key, path="configs/paths.yaml"):
     v = cfg(key, None, path)
     if not v:
         _s.exit(f"\n[paths] '{key}' is not set in {path}.\n"
-                f"  Run:  python -m src.paths --root /media/data2/MedVIU_valdata "
+                f"  Run:  python -m src.paths --root /path/to/MedVIU_valdata "
                 f"--write\n")
     return v
 
