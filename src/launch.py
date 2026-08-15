@@ -1,28 +1,6 @@
 """
 Background job launcher that survives a closed notebook.
 
-Jupyter refuses `!cmd &` outright ("Background processes not supported"), and
-anything started from a `!` cell dies when the kernel restarts. A 12-hour SFT
-run cannot live there.
-
-This starts the job in a NEW SESSION (setsid semantics via start_new_session),
-detached from the kernel's process group, with output to a log file. Killing the
-kernel, closing the browser, or dropping SSH will not touch it.
-
-From a notebook cell:
-
-    !python -m src.launch sft
-    !python -m src.launch status
-    !python -m src.launch tail
-    !python -m src.launch stop
-
-Or in Python:
-
-    from src.launch import start, status
-    start("sft")
-
-If you have a real terminal, `tmux new -s sft` then running the command directly
-is still the better habit. This exists because you don't always have one.
 """
 from __future__ import annotations
 import argparse, os, signal, subprocess, sys, time, json
