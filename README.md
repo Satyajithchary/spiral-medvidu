@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Benchmark](https://img.shields.io/badge/benchmark-MedVidBench-informational)](https://huggingface.co/datasets/UII-AI/MedVidBench)
 
-Official implementation of Team MINDH Lab for the MedVidU Challenge at the ECCV 2026 Workshop on
+Official implementation of **Team MINDH Lab** for the MedVidU Challenge at the ECCV 2026 Workshop on
 Medical Video Understanding. Accepted as an **Oral**.
 
 ---
@@ -76,7 +76,7 @@ RC_llm 3.374 → 3.380.
 
 ## Method
 
-![SPIRAL framework](assets/fig1_spiral_architecture.png)
+![SPIRAL framework](assets/SPIRAL_Architecture_HighDef_800dpi(1).png)
 
 | | Component | Stage | What it does |
 |---|---|---|---|
