@@ -1,14 +1,13 @@
 """
-STEP 0 — RUN THIS FIRST. Nothing else is safe until this passes.
+STEP 0.
 
-Everything downstream assumes things about the JSON that I inferred from the
-dataset card. This script verifies them against YOUR actual files and prints the
+Everything downstream assumes things about the JSON that inferred from the
+dataset card. This script verifies them against the actual files and prints the
 ground-truth answer formats per task, which is what the parsers key off.
 
     python -m src.inspect_data --train medvidu_eccv2026_trainval.json \
                                --test  cleaned_test_data_11_04.json
 
-Read the output. If anything says MISMATCH, fix configs/paths.yaml before moving on.
 """
 import argparse, json, re, collections, os, random
 
@@ -109,7 +108,7 @@ def main():
         if rc:
             print("    RC_info example:", json.dumps(rc[0]["RC_info"]))
 
-        # --- ANSWER FORMATS — the important part ------------------------
+        # --- ANSWER FORMATS - the important part ------------------------
         print("\n" + "-" * 78)
         print("ANSWER FORMATS PER TASK  (parsers in src/rewards.py key off these)")
         print("-" * 78)
