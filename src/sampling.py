@@ -2,9 +2,9 @@
 Task-Adaptive Timestamped Sampling (TATS).
 
 The trap everybody falls into: "adaptive sampling picks better frames" is true,
-but if you hand a model non-uniformly spaced frames and ask "when does cutting
+but if we hand a model non-uniformly spaced frames and ask "when does cutting
 happen?", it has no way to know frame 12 is at t=31s rather than t=12s. Adaptive
-sampling silently destroys temporal grounding unless you *tell* the model the
+sampling silently destroys temporal grounding unless we *tell* the model the
 timestamps. So every sampler here returns (indices, timestamps) and prompts.py
 always renders the timestamp grid into the text.
 
