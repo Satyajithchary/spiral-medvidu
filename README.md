@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Benchmark](https://img.shields.io/badge/benchmark-MedVidBench-informational)](https://huggingface.co/datasets/UII-AI/MedVidBench)
 
-Official implementation for the MedVidU Challenge at the ECCV 2026 Workshop on
+Official implementation of Team MINDH Lab for the MedVidU Challenge at the ECCV 2026 Workshop on
 Medical Video Understanding. Accepted as an **Oral**.
 
 ---
@@ -24,7 +24,7 @@ inference, and a submission builder that enforces the leaderboard schema.
 **Two measurements about the benchmark itself** that apply to anyone working on
 it, independently of this pipeline.
 
-### Finding 1 — reported grounding accuracy is bounded by output token budget
+### Finding 1 - reported grounding accuracy is bounded by output token budget
 
 Spatiotemporal grounding references contain **5.31 boxes on average**, and one
 box costs about 25 tokens once serialised. A generation budget that admits one
@@ -52,7 +52,7 @@ across the same sweep. The effect is specific to sequence-valued references.
 
 ![Output budget sweep](assets/fig2_token_budget.png)
 
-### Finding 2 — predictions must be keyed on the question, not the clip
+### Finding 2 - predictions must be keyed on the question, not the clip
 
 The released identifier is `video_id&&start&&end&&fps`. It encodes clip
 provenance, not question identity.
@@ -98,7 +98,7 @@ direction free**.
 
 | removed | TAG@0.3 | STG | paired diff | 95% CI | p | improved / worsened |
 |---|---|---|---|---|---|---|
-| — (complete) | 0.2305 | 0.1007 | | | | |
+| - (complete) | 0.2305 | 0.1007 | | | | |
 | temporal resampling | 0.2538 | 0.1007 | −0.028 | [−0.060, +0.003] | 0.23 | 59 / 61 |
 | spatial re-prediction | 0.2305 | 0.1080 | −0.007 | [−0.017, +0.002] | 0.30 | 41 / 59 |
 
@@ -141,14 +141,13 @@ rather than a statistically separated one: five seeds give
 **0.3347 ± 0.0151** over 24 validation instances, which scales to roughly 0.006
 over the 160 test instances.
 
-Every number in the paper is in `results/` as JSON.
 
 ---
 
 ## Quick start
 
 ```bash
-git clone https://github.com/<user>/spiral-medvidu.git && cd spiral-medvidu
+git clone https://github.com/Satyajithchary/spiral-medvidu.git && cd spiral-medvidu
 python -m venv .venv && source .venv/bin/activate
 
 # install torch first, matching your GPU (Blackwell shown)
