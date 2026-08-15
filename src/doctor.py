@@ -1,12 +1,6 @@
 """
-PREFLIGHT — run this before anything else, and again whenever something breaks.
-
-Ten seconds here would have saved the last cascade: a transformers-v5 rename, a
-stale config key, and a missing checkpoint all surfaced as unrelated-looking
-tracebacks three stages apart.
-
     python -m src.doctor
-    python -m src.doctor --stage sft      # also check SFT prerequisites
+    python -m src.doctor --stage sft     
     python -m src.doctor --stage infer
 
 Exit code 0 = safe to proceed, 1 = something will fail.
@@ -194,7 +188,7 @@ def main():
     if st in ("data", "sft", "grpo", "infer", "all"):
         print("-" * 74)
         check("configs/paths.yaml", c_paths_yaml,
-              "python -m src.paths --root /media/data2/MedVIU_valdata --write")
+              "python -m src.paths --root /path/to/MedVIU_valdata --write")
         if os.path.exists("configs/paths.yaml"):
             check("json files exist", c_files)
             check("frames resolve on disk", c_frames,
