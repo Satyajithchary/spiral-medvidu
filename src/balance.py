@@ -1,5 +1,5 @@
 """
-C2 — Difficulty-Balanced Multi-Source Sampling.
+C2 - Difficulty-Balanced Multi-Source Sampling.
 
 MedGRPO's central and correct observation is that heterogeneous medical datasets
 have wildly different difficulty, and that raw reward magnitudes let the easy
@@ -14,7 +14,7 @@ there. In the challenge split:
 
 Under uniform sampling the model sees a NurViD row nine times for every JIGSAWS
 row, and a TAL row five times for every region caption. Gradient share tracks
-sample count, not task importance or difficulty — which is exactly the failure
+sample count, not task importance or difficulty - which is exactly the failure
 mode the paper diagnoses one stage later.
 
 We apply temperature-scaled inverse-frequency weighting over the (dataset, task)
@@ -26,13 +26,6 @@ product, the SFT analogue of their reward normalisation:
     tau = 1   -> uniform over (d,t) cells   (over-corrects, starves big cells)
     tau = 0.5 -> square-root balancing      (default; the usual sweet spot)
 
-Optional difficulty term: after a validation pass you can supply per-cell scores
-and upweight the cells the model is worst at, w *= (1 - acc)**gamma. That closes
-the loop — the SFT sampler and the RL normaliser then use the same statistic.
-
-This is one config line and roughly free, and it gives the paper a clean
-symmetry: normalise the DATA distribution in stage 1, the REWARD distribution in
-stage 2.
 """
 from __future__ import annotations
 import json, collections, math
