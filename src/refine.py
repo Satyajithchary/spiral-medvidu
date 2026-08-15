@@ -1,10 +1,8 @@
 """
-C4 — Self-Refining Grounding (SRG)
-C5 — Ordinal Expectation Decoding (OED)
+C4 - Self-Refining Grounding (SRG)
+C5 - Ordinal Expectation Decoding (OED)
 
 Both are INFERENCE-ONLY. No training, no extra VRAM, no risk of a failed run.
-They buy metric points with compute, which is the right trade when you have a
-GPU and no time.
 
 --------------------------------------------------------------------------
 C4a  ITERATIVE TEMPORAL ZOOM
@@ -35,7 +33,7 @@ Pass A : full anchor frame       -> coarse box b0
 Pass B : crop to 2.2 x b0, feed the crop at full processor resolution
          -> re-predict in crop coordinates -> map back to frame coordinates
 
-This is how you get the "1024x1024 Med-Perceiver" benefit without training
+This is how we get the "1024x1024 Med-Perceiver" benefit without training
 anything: spend inference compute instead of VRAM.
 
 --------------------------------------------------------------------------
@@ -43,7 +41,7 @@ C5   ORDINAL EXPECTATION DECODING
 --------------------------------------------------------------------------
 The MedGRPO paper's own failure analysis: on CVS, their models emit (0,0,0),
 GPT-4.1 emits (2,2,2), ground truth is (1,0,1). Nobody ever predicts 1. That is
-a calibration pathology of greedy decoding on an ordinal rubric — argmax over a
+a calibration pathology of greedy decoding on an ordinal rubric - argmax over a
 3-way ordinal head collapses to modal classes.
 
 Fix: sample K generations at T>0, parse each into ordinal scores, take the
@@ -119,7 +117,7 @@ def temporal_zoom(model, processor, collate, ds, row, coarse_pred,
     prior = (f"On a first coarse pass over the whole clip you localised this "
              f"action to approximately {s0:.1f}-{e0:.1f} seconds. You are now "
              f"given {len(sel)} frames covering only {lo:.1f}-{hi:.1f} seconds "
-             f"at roughly {eff_fps:.1f} frames per second — about "
+             f"at roughly {eff_fps:.1f} frames per second - about "
              f"{eff_fps * max(1e-6, (times[-1]-times[0])) / max(1, len(times)):.0f}x "
              f"the temporal detail of the first pass. Determine the exact start "
              f"and end. Your refined answer may fall outside the coarse estimate "
