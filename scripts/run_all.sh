@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-# SPIRAL — end-to-end. Every stage is resumable. Read the README first.
-#   bash scripts/run_all.sh
-# Paths come from configs/paths.yaml:  python -m src.paths --root /media/data2 --write
 set -euo pipefail
 mkdir -p logs data preds runs
 
