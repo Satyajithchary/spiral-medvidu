@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-# The test metadata json is almost certainly already on your disk, inside
-# testdata.zip (19.4 GB, sitting unextracted at the root). Extracting one ~10 MB
-# json out of a zip beats re-downloading anything.
 set -euo pipefail
 ROOT=${1:-/media/data2/MedVIU_valdata}
 ZIP="$ROOT/testdata.zip"
