@@ -1,33 +1,31 @@
-# Stage-2 GRPO on verifiable tasks only. ~5-7h for 600 steps.
-# Run ONLY if >8h remain AFTER an SFT submission is already banked.
+# Stage-2 GRPO on verifiable tasks only.
 
 base_model: Qwen/Qwen3-VL-8B-Instruct
 sft_ckpt:   runs/sft/final
 output_dir: runs/grpo
 
 train_json: data/train.json
-cache_root: /media/data2/medvidu_cache
+cache_root: /path/to/medvidu_cache
 src_prefix: /root/data
 
 group_size: 8
-micro_bs: 2              # rollouts per backward chunk; lower this first if OOM
+micro_bs: 2              # rollouts per backward chunk
 grad_accum: 4
 max_steps: 600
 lr: 1.0e-6
 clip_grad: 0.5
 eps_low: 0.2
-eps_high: 0.28           # DAPO asymmetric clipping, as in the paper
+eps_high: 0.28           # DAPO asymmetric clipping
 temperature: 1.0
 top_p: 0.95
 logistic_k: 3.0
 
-# halve the visual budget vs SFT: 8 rollouts of KV cache is the constraint
 max_frames: 32
 budget_scale: 0.5
 max_pixels: 100352       # 128 * 28 * 28
 max_len: 6144
 
-embedder: null           # set to sentence-transformers/all-MiniLM-L6-v2 if installed
+embedder: null           
 norm_init: null
 grad_ckpt: true
 save_steps: 150
