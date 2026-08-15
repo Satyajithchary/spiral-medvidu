@@ -1,8 +1,5 @@
 """
-Timestamps, done properly.
-
-inspect_data reported 77/300 disagreements between the two naive methods. The
-cause is that this benchmark carries THREE different metadata conventions:
+Timestamps.
 
     input_video_start_time / input_video_end_time     1395 rows  (NurViD)
     input_video_start_frame / input_video_end_frame   4275 rows
@@ -24,14 +21,14 @@ Two facts rescue this:
 
 Resolution order: duration -> dirname fps -> median stride -> index/fps.
 `frame_times()` returns seconds and `time_source()` says which rule fired, so
-you can audit coverage across the whole split.
+we can audit coverage across the whole split.
 """
 from __future__ import annotations
 import re, os
 import numpy as np
 
 RE_DIR_FPS = re.compile(r"frames?[_-]?(\d+(?:\.\d+)?)\s*fps", re.I)
-# some dumps encode it differently; extend here as you find more
+# some dumps encode it differently; extend here as we find more
 RE_DIR_FPS_ALT = re.compile(r"(\d+(?:\.\d+)?)fps", re.I)
 
 
