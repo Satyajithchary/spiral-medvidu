@@ -1,12 +1,12 @@
 """
-STEP 4/6 — Inference with Cross-Task Consistency Decoding (CTCD).
+STEP 4/6 - Inference with Cross-Task Consistency Decoding (CTCD).
 
-Contribution #2, and the cheapest win in this whole repo.
+Contribution #2.
 
 The test set asks MULTIPLE questions about the SAME video. Every published
 baseline answers each row in isolation. But if the model has already localised
 "cutting: 31.0-44.0s" for a video in a TAL row, that is a strong prior when the
-same video's dense-captioning row asks for segments — and it costs nothing but a
+same video's dense-captioning row asks for segments - and it costs nothing but a
 second forward pass.
 
 Pass 1: answer all grounding + short-form rows (tal, stg, next_action, cvs, sa).
@@ -14,10 +14,9 @@ Pass 1: answer all grounding + short-form rows (tal, stg, next_action, cvs, sa).
 Pass 2: answer the captioning rows (dvc, vs, rc) with that self-derived timeline
         injected into the system prompt.
 
-No ground truth is used anywhere. Legal under any reading of the rules.
+No ground truth is used anywhere. 
 
-Resumable: writes JSONL incrementally, skips ids already present. A 6,245-sample
-run on one GPU is hours long; do not let a CUDA OOM at hour 6 cost you the run.
+Resumable: writes JSONL incrementally, skips ids already present.
 
     python -m src.infer --test cleaned_test_data_11_04.json \
         --base Qwen/Qwen3-VL-8B-Instruct --adapter runs/grpo/final \
@@ -134,7 +133,7 @@ def build_ctcd(records, test_rows) -> dict[str, str]:
 @torch.no_grad()
 def refine_pass(rows, coarse, ds, model, processor, collate, out_path, cfg):
     """C4 + C5. Runs AFTER pass 1 and BEFORE CTCD, so the timeline that gets
-    injected into the captioning prompts is the refined one — the refinements
+    injected into the captioning prompts is the refined one - the refinements
     compound rather than sitting in separate silos."""
     from .refine import refine, REFINE_TASKS
     done = load_done(out_path)
@@ -401,7 +400,7 @@ def main():
         miss = collections.Counter(
             normalize_task(r["qa_type"]) for r in rows if rkey(r) not in allrec)
         print(f"  !! {n_need - len(allrec)} MISSING: {dict(miss)}")
-        print("  !! re-run this exact command — it resumes from the jsonl files.")
+        print("  !! re-run this exact command - it resumes from the jsonl files.")
     else:
         print("[infer] complete.")
 
