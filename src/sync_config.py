@@ -2,10 +2,6 @@
 Write configs/paths.yaml into the training configs, so there is ONE source of
 truth for where the data lives.
 
-The previous cascade included a `KeyError: 'src_prefix'` because a shell helper
-and a yaml file disagreed about a key name. That class of bug disappears if the
-resolver's output is propagated mechanically instead of by hand.
-
     python -m src.sync_config
 """
 import argparse, yaml, os
