@@ -19,7 +19,7 @@ Per-task heads sound right and are wrong here, for three reasons:
 3. There is no "head" to give. An autoregressive VLM emits text through one
    shared LM head over the vocabulary. "Per-task head" can only mean per-task
    LoRA adapters (feasible) or MoE FFN layers with a learned router (needs far
-   more data than you have to train the router itself).
+   more data than we have to train the router itself).
 
 WHAT IS DEFENSIBLE: THREE GROUPS, DETERMINISTIC ROUTING
 -------------------------------------------------------
@@ -35,8 +35,6 @@ Each partition is large enough to train. Routing is a dict lookup on qa_type -
 no learned router, no data cost, no inference ambiguity. Within a group the
 tasks genuinely share an output format, so the transfer that Row A/C measured is
 preserved where it is most likely to exist.
-
-Total compute is roughly unchanged: three runs over a third of the data each.
 
 """
 from __future__ import annotations
