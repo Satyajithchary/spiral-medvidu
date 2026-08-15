@@ -4,9 +4,7 @@ Multi-run evaluation for the stochastically decoded tasks.
 Addresses the chair's second required revision. Ordinal expectation decoding
 samples K generations at non-zero temperature, so skill assessment, critical
 view of safety and next action prediction vary between otherwise identical
-executions. The submitted paper reports next action prediction at 0.5638 and
-0.5106 across two runs, which places the headline skill margin of 0.337 against
-0.331 inside run-to-run variation.
+executions.
 
 This script repeats inference on the affected tasks alone with a different seed
 each time and reports mean and sample standard deviation. Only those tasks are
