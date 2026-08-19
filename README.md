@@ -51,7 +51,7 @@ Skill assessment shows the same shape more sharply, 5.67× between 16 and 64
 tokens. Temporal grounding, whose references hold only 1.76 spans, varies by 12%
 across the same sweep. The effect is specific to sequence-valued references.
 
-![Output budget sweep](assets/SPIRAL_Results (1).png)
+![Output budget sweep](assets/SPIRAL_Results_(1).png)
 
 ### Finding 2 - predictions must be keyed on the question, not the clip
 
